@@ -24,9 +24,9 @@ class ProductController extends Controller
     }
 
     public function getData()
-    {
+    {        
         $listProduct = Product::query();
-        return Datatables::of(Product::query())
+        return Datatables::of($listProduct)
         ->addColumn('action', function ($product) {
             return '<a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-eye-open btnShow" data-id="'.$product["id"].'" id="row-'.$product["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$product["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$product["id"].'></a>';
         })

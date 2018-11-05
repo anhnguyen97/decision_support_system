@@ -68,39 +68,7 @@ Quản lý sản phẩm
 						</thead>
 					</table>
 				</div>
-				<!-- /.box-body -->
-
-				{{-- MODAL EDIT --}}
-				<div class="modal fade" id="modalEdit">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title">Edit Product</h4>
-							</div>
-							<div class="modal-body">
-								<form action="" method="POST" role="form" id="formUpdateProduct">
-									@method('PUT')
-									@csrf
-
-									<input type="text" class="form-control hidden" id="edit-id" name="edit-id">
-									<div class="form-group">
-										<label for="">Product's name</label>
-										<input type="text" class="form-control" id="edit-name">
-									</div>
-									<div class="form-group">
-										<label for="">Desciption</label>
-										<textarea class="form-control" id="edit-description" ></textarea>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary">Update</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+				<!-- /.box-body -->				
 			</div>
 			<!-- /.box -->
 		</div>
@@ -110,6 +78,7 @@ Quản lý sản phẩm
 </section>
 <!-- /.content -->
 
+{{-- MODAL ADD PRODUCT --}}
 <div class="modal fade" id="modalAddProduct">
 	<div class="modal-dialog" style="width: 900px;">
 		<div class="modal-content">
@@ -269,6 +238,40 @@ Quản lý sản phẩm
 		</div>
 	</div>
 </div>
+<!--/.end Modal add Product -->
+
+{{-- MODAL EDIT --}}
+<div class="modal fade" id="modalEdit">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit Product</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" role="form" id="formUpdateProduct">
+					@method('PUT')
+					@csrf
+
+					<input type="text" class="form-control hidden" id="edit-id" name="edit-id">
+					<div class="form-group">
+						<label for="">Product's name</label>
+						<input type="text" class="form-control" id="edit-name">
+					</div>
+					<div class="form-group">
+						<label for="">Desciption</label>
+						<textarea class="form-control" id="edit-description" ></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{-- /.end Modal EDIT --}}
 @endsection
 
 @section('js')

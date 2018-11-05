@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Brand;
+use App\Product;
 use Yajra\Datatables\Datatables;
 
 class BrandController extends Controller
@@ -25,7 +26,7 @@ class BrandController extends Controller
     {
         return Datatables::of(Brand::query())
         ->addColumn('action', function ($brand) {
-            return '<a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-eye-open btnShow" data-id="'.$brand["id"].'" id="row-'.$brand["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$brand["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$brand["id"].'></a>';
+            return '<a title="List product" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'.$brand["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$brand["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$brand["id"].'></a>';
         })
         ->editColumn('updated_at', function($brand){
             return $brand->updated_at->format('H:i:s d/m/Y');
@@ -55,14 +56,36 @@ class BrandController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display list product group by brand.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function listProduct($brand_id)
     {
-        //
+        $listProduct = Product::where('brand_id', '=', $brand_id)->get();
+        // dd($brand_id);
+        return Datatables::of($listProduct)
+        ->addColumn('action', function ($product) {
+            return '<a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-eye-open btnShow" data-id="'.$product["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$product["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$product["id"].'></a>';
+        })
+        ->editColumn('updated_at', function($product){
+            return $product->updated_at->format('H:i:s d/m/Y');
+        })
+        ->editColumn('brand', function($product){
+            $brand = $product->brand;
+            return $brand->name;
+        })
+        ->editColumn('quantity', function($product){
+            return number_format($product->quantity);
+        })
+        ->editColumn('cost', function($product){
+            return number_format($product->cost, 2);
+        })
+        ->setRowId(function ($product) {
+            return 'row-'.$product->id;
+        })
+        ->make(true);
     }
 
     /**
@@ -104,6 +127,12 @@ class BrandController extends Controller
     
     public function destroy($id)
     {
-        
+        $productInBrand = Product::where('brand_id', '=', $id)->exists();
+
+        if ($productInBrand==true) {
+            return response()->json('existProduct', 200);
+        } else {
+            return Brand::find($id)->delete()?response()->json('success'):response([],400);
+        }
     }
 }

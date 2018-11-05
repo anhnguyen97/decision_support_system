@@ -54,6 +54,10 @@ Route::group(['prefix' => 'admin'], function() {
 		Route::get('/edit/{id}', 'BrandController@edit');
 
 		Route::put('/update/{id}', 'BrandController@update');
+
+		Route::delete('/delete/{id}', 'BrandController@destroy');
+
+		Route::get('/show/{brand_id}', 'BrandController@listProduct');
 	});
 });
 

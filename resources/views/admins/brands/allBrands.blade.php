@@ -69,6 +69,7 @@ Quản lý thương hiệu
 							</div>
 						</div>
 					</div>
+					<!--/. end Modal add new brand -->	
 				</div>
 				<!-- /.box-header -->
 
@@ -87,38 +88,6 @@ Quản lý thương hiệu
 					</table>
 				</div>
 				<!-- /.box-body -->
-
-				{{-- MODAL EDIT --}}
-				<div class="modal fade" id="modalEdit">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title">Edit Brand</h4>
-							</div>
-							<div class="modal-body">
-								<form action="" method="POST" role="form" id="formUpdateBrand">
-									@method('PUT')
-									@csrf
-									
-									<input type="text" class="form-control hidden" id="edit-id" name="edit-id">
-									<div class="form-group">
-										<label for="">Brand's name</label>
-										<input type="text" class="form-control" id="edit-name">
-									</div>
-									<div class="form-group">
-										<label for="">Desciption</label>
-										<textarea class="form-control" id="edit-description" ></textarea>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-										<button type="submit" class="btn btn-primary">Update</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 			<!-- /.box -->
 		</div>
@@ -127,6 +96,71 @@ Quản lý thương hiệu
 	<!-- /.row -->
 </section>
 <!-- /.content -->
+
+{{-- MODAL EDIT --}}
+<div class="modal fade" id="modalEdit">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit Brand</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" method="POST" role="form" id="formUpdateBrand">
+					@method('PUT')
+					@csrf
+
+					<input type="text" class="form-control hidden" id="edit-id" name="edit-id">
+					<div class="form-group">
+						<label for="">Brand's name</label>
+						<input type="text" class="form-control" id="edit-name">
+					</div>
+					<div class="form-group">
+						<label for="">Desciption</label>
+						<textarea class="form-control" id="edit-description" ></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--/. end Modal EDIT -->
+
+<!--MODAL LIST PRODUCT Group by Brand -->
+<div class="modal fade" id="modalListProduct">
+	<div class="modal-dialog" style="width: 1200px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">List product group by Brand: <span id="filter_brand_id"></span> </h4>
+			</div>
+			<div class="modal-body">
+				<table id="tableListProduct" class="table table-bordered table-striped text-center tableListProduct">
+					<thead>
+						<tr>
+							<th width="5%">ID</th>
+							<th>Thumbnail</th>
+							<th>Name</th>
+							<th>Brand</th>
+							<th>Quantity</th>
+							<th>Cost</th>
+							<th>Lastest updated</th>
+							<th width="15%">Action</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end modal List product -->
 @endsection
 
 @section('js')
@@ -144,8 +178,6 @@ Quản lý thương hiệu
 {{-- <script src="{{ asset('admins/bower_components/fastclick/lib/fastclick.js') }}"></script> --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('admins/dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-{{-- <script src="{{ asset('admins/dist/js/demo.js') }}"></script> --}}
 <!-- page script -->
 <script>
 
@@ -183,7 +215,7 @@ Quản lý thương hiệu
 			success: function(res){
 				$('#modalAddBrand').modal('hide');
 				toastr['success']('Add new Brand successfully!');
-				$('#tableBrand').prepend('<tr id="row-'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-eye-open btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
+				$('#tableBrand').prepend('<tr id="row-'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
 				
 			},
 			error: function(xhr, ajaxOptions, thrownError){
@@ -231,7 +263,7 @@ Quản lý thương hiệu
 				// alert('row');
 				row.remove();
 				toastr['success']('Update Brand: '+res.name+' successfully!');
-				$('#tableBrand').prepend('<tr id="'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-eye-open btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
+				$('#tableBrand').prepend('<tr id="'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
 
 				
 			},
@@ -239,6 +271,64 @@ Quản lý thương hiệu
 				toastr['error']('Edit failed!');
 			}
 		})
+	});
+
+	//delete brand
+	$('#tableBrand').on('click', '.btnDelete', function(event) {
+		event.preventDefault();
+		var id = $(this).data('id');
+
+		swal({
+			title: "Are you sure?",
+			text: "Once deleted, you will not be able to recover this Brand!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				$.ajax({
+					url: '{{ asset('') }}admin/brands/delete/'+id,
+					type: 'DELETE',
+					dataType:"json",
+					success: function(res){
+						console.log(res);
+						if (res == 'existProduct') {
+							swal({
+								title:"Can't delete brand",
+								text: "You must delete product before deleting brand.",
+								icon: "warning",
+							});						
+						} 
+						if(res == "success") {
+							var row = document.getElementById('row-'+id);
+							row.remove();
+							swal({
+								title: "The brand has been deleted!",
+								icon: "success",
+							});
+						}						
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						swal({
+							title: "Delete this brand failed!",
+							icon: "error",
+						});
+					}
+				})
+			} else {
+				swal({
+					title: "The brand is safety!",
+					icon: "success",
+					button: "OK!",
+				});
+			}
+		});
+	});
+
+	list product: filter by brand
+	$('#tableBrand').on('click', '.btnShow', function(event) {
+		var id = $(this).data(id);
 	})
 
 </script>
