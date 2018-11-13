@@ -38,6 +38,10 @@ Route::group(['prefix' => 'admin'], function() {
 		Route::get('/edit/{id}', 'ProductController@edit');
 
 		Route::put('/update/{id}', 'ProductController@update');
+
+		Route::delete('/delete/{id}', 'ProductController@destroy');
+
+		Route::get('show/{id}', 'ProductController@show');
 	});	
 
 	/*
@@ -57,7 +61,9 @@ Route::group(['prefix' => 'admin'], function() {
 
 		Route::delete('/delete/{id}', 'BrandController@destroy');
 
-		Route::get('/show/{brand_id}', 'BrandController@listProduct');
+		Route::get('/{brand_slug}', 'BrandController@listProduct');
+
+		Route::get('/show/{brand_slug}', 'BrandController@getDataListProduct');
 	});
 });
 

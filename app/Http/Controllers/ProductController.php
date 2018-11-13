@@ -7,6 +7,8 @@ use App\Product;
 use App\ProductDetail;
 use App\Brand;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -17,10 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $allBrand = Brand::select('id', 'name')->get();
-        return view('admins.products.allProduct', [
-            'allBrand' => $allBrand,
-        ]);
+        return view('admins.products.allProduct');
     }
 
     public function getData()
@@ -57,7 +56,31 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        console.log($request->all());
+        $data = $request->all();
+        $date = date('YmdHis', time());
+        if ($request->hasFile('thumbnail')) {
+            $extension = '.'.$data['thumbnail']->getClientOriginalExtension();
+            $file_name = md5($request->name).'_'. $date . $extension;
+            $data['thumbnail']->storeAs('public/products',$file_name);
+            $data['thumbnail'] = 'storage/products/'.$file_name;
+        } else {
+            // $imageName='posts/userDefault.png';
+        }
+        $data['slug'] = str_slug($request->name);
+        $product = Product::create($data);
+        if ($product) {
+            $data['product_id'] = $product['id'];
+            $detail = ProductDetail::create($data);
+            if ($detail) {
+                $product['brand_name'] = $product->brand->name;
+                return $product;
+            } else {                
+                Product::find($product['id'])->delete();
+                return $detail;
+            }
+        }  else {
+            return $product;
+        }      
     }
 
     /**
@@ -68,7 +91,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        $product['detail'] = $product->productDetail;
+        $product['brand_name'] = $product->brand->name;
+        return $product;
     }
 
     /**
@@ -79,7 +105,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $product['detail'] = $product->productDetail;
+        return $product;
     }
 
     /**
@@ -102,6 +130,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if ($product->thumbnail != null && $product->thumbnail != 'undefined') {
+            $file = explode('/',$product->thumbnail)[2];
+            Storage::delete($file);
+            unlink(storage_path('app/public/products/'.$file));
+        };        
+        $product->productDetail()->delete();
+        return Product::find($id)->delete()?response()->json([],200):response()->json([],400);
     }
 }

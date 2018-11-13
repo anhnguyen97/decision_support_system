@@ -26,7 +26,7 @@ class BrandController extends Controller
     {
         return Datatables::of(Brand::query())
         ->addColumn('action', function ($brand) {
-            return '<a title="List product" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'.$brand["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$brand["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$brand["id"].'></a>';
+            return '<a title="List product" href="http://dss.me/admin/brands/'.$brand['slug'].'" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'.$brand["id"].'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='.$brand["id"].'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='.$brand["id"].'></a>';
         })
         ->editColumn('updated_at', function($brand){
             return $brand->updated_at->format('H:i:s d/m/Y');
@@ -56,14 +56,25 @@ class BrandController extends Controller
     }
 
     /**
-     * Display list product group by brand.
+     * Display view list product group by brand.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function listProduct($brand_id)
+    public function listProduct($brand_slug)
     {
-        $listProduct = Product::where('brand_id', '=', $brand_id)->get();
+        return view('admins.brands.listProduct')->with('brand_slug', $brand_slug);       
+    }
+
+    /**
+     * get data List product filter by Brand with ajax
+     * @param  [type] $brand_slug [description]
+     * @return [type]             [description]
+     */
+    public function getDataListProduct($brand_slug)
+    {
+        $brand = Brand::where('slug','=',$brand_slug)->first();
+        $listProduct = $brand->products()->get();
         // dd($brand_id);
         return Datatables::of($listProduct)
         ->addColumn('action', function ($product) {

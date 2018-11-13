@@ -35,6 +35,7 @@ Quản lý thương hiệu
 		<div class="col-xs-12">
 
 			<div class="box">
+				<a href="{{ asset('admin/brand/') }}" title=""></a>
 				<div class="box-header">
 					<h3 {{-- class="box-title" --}}>List brands<a data-toggle="modal" href='#modalAddBrand' class="fa fa-plus-square" style="float: right; color: green"> new brand</a></h3>
 
@@ -215,7 +216,7 @@ Quản lý thương hiệu
 			success: function(res){
 				$('#modalAddBrand').modal('hide');
 				toastr['success']('Add new Brand successfully!');
-				$('#tableBrand').prepend('<tr id="row-'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
+				$('#tableBrand').prepend('<tr id="row-'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" href="http://dss.me/admin/brands/"'+res.slug+'" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
 				
 			},
 			error: function(xhr, ajaxOptions, thrownError){
@@ -263,9 +264,7 @@ Quản lý thương hiệu
 				// alert('row');
 				row.remove();
 				toastr['success']('Update Brand: '+res.name+' successfully!');
-				$('#tableBrand').prepend('<tr id="'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');
-
-				
+				$('#tableBrand').prepend('<tr id="'+res.id+'"><td width="5%" class="text-center">'+res.id+'</td><td class="text-left">'+res.name+'</td><td>'+res.description+'</td><td>'+res.created_at+'</td><td>'+res.updated_at+'</td><td class="text-center" width="15%" ><a title="Detail" href="http://dss.me/admin/brands/"'+res.slug+'" class="btn btn-info btn-sm glyphicon glyphicon-list-alt btnShow" data-id="'+res.id+'" id="row-'+res.id+'"></a>&nbsp;<a title="Edit" class="btn btn-warning btn-sm glyphicon glyphicon-edit btnEdit" data-id='+res.id+'></a>&nbsp;<a title="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash btnDelete" data-id='+res.id+'></a></td></tr>');				
 			},
 			error: function(xhr, ajaxOptions, thrownError){
 				toastr['error']('Edit failed!');
@@ -325,11 +324,6 @@ Quản lý thương hiệu
 			}
 		});
 	});
-
-	list product: filter by brand
-	$('#tableBrand').on('click', '.btnShow', function(event) {
-		var id = $(this).data(id);
-	})
 
 </script>
 @endsection
