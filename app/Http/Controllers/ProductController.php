@@ -139,4 +139,23 @@ class ProductController extends Controller
         $product->productDetail()->delete();
         return Product::find($id)->delete()?response()->json([],200):response()->json([],400);
     }
+
+
+    public function updateDb()
+    {
+        $list = Product::all();
+        foreach ($list as $key => $item) {
+            $date = date('YmdHis', time());
+            $extension = '.'.explode('.',$item->thumbnail)[1];;
+            $file_name = md5($item->name).'_'. $date . $extension;
+            $path = 'storage/products/'.$file_name;
+            Storage::move('public/products/'.$item['thumbnail'], 'public/products/'.$file_name);
+            $data = array(
+                'slug' => str_slug($item->name),
+                'thumbnail' => $path,
+                'quantity' => rand(0,259),
+            );
+            Product::find($item['id'])->update($data);
+        }
+    }
 }

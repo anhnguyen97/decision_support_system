@@ -20,7 +20,7 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>D</b>DS</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>DDS</span>
+        <span class="logo-lg"><b>Decesion</b>DS</span>
       </a>
       <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
@@ -57,14 +57,14 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="{{ asset('admins/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-                <span class="hidden-xs">Alexander Pierce</span>
+                <span class="hidden-xs">ADMIN</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
                   <img src="{{ asset('admins/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
                   <p>
-                    Alexander Pierce - Web Developer
+                    ADMIN - Web Developer
                     <small>Member since Nov. 2012</small>
                   </p>
                 </li>
@@ -113,7 +113,7 @@
             <img src="{{ asset('admins/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>Alexander Pierce</p>
+            <p>ADMIN</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -138,27 +138,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </span> --}}
             </a>
-           {{--  <ul class="treeview-menu">
-              <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-              <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-            </ul> --}}
           </li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-pie-chart"></i>
-              <span>Charts</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-              <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-              <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-              <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-            </ul>
-          </li>
-          <li class="treeview">
+         
+          {{-- <li class="treeview">
             <a href="#">
               <i class="fa fa-table"></i> <span>Quản lý sản phẩm</span>
               <span class="pull-right-container">
@@ -169,8 +151,8 @@
               <li><a href="{{ asset('admin/brands') }}"><i class="fa fa-circle-o"></i>Danh sách thương hiệu</a></li>
               <li><a href="{{ asset('/admin/products') }}"><i class="fa fa-circle-o"></i>Danh sách Sản phẩm</a></li>
             </ul>
-          </li>
-          <li class="treeview">
+          </li> --}}
+          {{-- <li class="treeview">
             <a href="#">
               <i class="fa fa-folder"></i> <span>Examples</span>
               <span class="pull-right-container">
@@ -182,13 +164,10 @@
               <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
               <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
               <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-              <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-              <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-              <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-              <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-              <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
             </ul>
-          </li>
+          </li> --}}
+          <li><a href="{{ asset('admin/brands') }}"><i class="fa fa-table"></i><span>Danh sách Thương hiệu</span></a></li>
+          <li><a href="{{ asset('/admin/products') }}"><i class="fa fa-circle-o"></i><span>Danh sách Sản phẩm</span></a></li>
           <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
           <li class="header">LABELS</li>
           <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>

@@ -24,7 +24,7 @@ class CreateProductDetailsTable extends Migration
             $table->integer('ram')->nullable();
             $table->integer('internal_memory')->nullable();
             $table->integer('external_memory_card')->nullable();
-            $table->integer('bluetooth')->nullable();
+            $table->float('bluetooth')->nullable();
             $table->float('length')->nullable();
             $table->float('width')->nullable();
             $table->float('thickness')->nullable();

@@ -19,6 +19,8 @@ Route::get('home', function() {
 	return view('admins.index');
 });
 
+Route::get('/updateDb', 'ProductController@updateDb');
+
 Route::group(['prefix' => 'admin'], function() {
 	Route::get('/', function() {
 		return view('admins.index');
