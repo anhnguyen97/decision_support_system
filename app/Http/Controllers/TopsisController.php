@@ -24,90 +24,90 @@ class TopsisController extends Controller
 		$attr_list;//tập thuộc tính
 
         //xử lý external memory card, internal_memory_card
-        foreach ($all_product as $index => $item) {
-            $ex = $item->external_memory_card;
-            if ($ex <= 32) {
-                $item->external_memory_card=1;
-            } else if($ex <=64) {
-               $item->external_memory_card=2;
-            } else if($ex<=128){
-               $item->external_memory_card=3;
-            } else {
-               $item->external_memory_card=4;
-            }  
+        // foreach ($all_product as $index => $item) {
+        //     $ex = $item->external_memory_card;
+        //     if ($ex <= 32) {
+        //         $item->external_memory_card=1;
+        //     } else if($ex <=64) {
+        //         $item->external_memory_card=2;
+        //     } else if($ex<=128){
+        //         $item->external_memory_card=3;
+        //     } else {
+        //         $item->external_memory_card=4;
+        //     }  
 
-            $in = $item->internal_memory;
-            if ($ex <= 16) {
-                $item->internal_memory=1;
-            } else if($ex <=32) {
-               $item->internal_memory=2;
-            } else if($ex <=64) {
-               $item->internal_memory=2;
-            } else if($ex<=128){
-               $item->internal_memory=3;
-            } else {
-               $item->internal_memory=4;
-            } 
-        }
+        //     $in = $item->internal_memory;
+        //     if ($ex <= 16) {
+        //         $item->internal_memory=1;
+        //     } else if($ex <=32) {
+        //         $item->internal_memory=2;
+        //     } else if($ex <=64) {
+        //         $item->internal_memory=2;
+        //     } else if($ex<=128){
+        //         $item->internal_memory=3;
+        //     } else {
+        //         $item->internal_memory=4;
+        //     } 
+        // }
 
 		//tổng của từng cột thuộc tính
-		foreach ($all_product[0] as $attr_name => $value) {
-			if ($attr_name != "product_id") {
-				$sum[$attr_name] = $all_product->sum($attr_name);
-				$attr_list[] = $attr_name;
-			}			
-		};
+        foreach ($all_product[0] as $attr_name => $value) {
+            if ($attr_name != "product_id") {
+                $sum[$attr_name] = $all_product->sum($attr_name);
+                $attr_list[] = $attr_name;
+            }			
+        };
 
 		//tính % theo chiều dọc từng thuộc tính
-		foreach ($all_product as $index => $item) {
-			$id = $item->product_id;
-			foreach ($item as $attr_name => $value) {
-				if ($attr_name != 'product_id') {
-					$P[$id][$attr_name] = $value/$sum[$attr_name];
-				}				
-			}
-		}
+        foreach ($all_product as $index => $item) {
+            $id = $item->product_id;
+            foreach ($item as $attr_name => $value) {
+                if ($attr_name != 'product_id') {
+                    $P[$id][$attr_name] = $value/$sum[$attr_name];
+                }				
+            }
+        }
 
 		// init output entropy matrix E and variation coefficient matrix D
 		// the weight of entropy dj matrix W
-		foreach ($attr_list as $key => $attr_name) {
-			$E[$attr_name] = 0;
-			$D[$attr_name] = 0;
-			$W[$attr_name] = 0;
-		}
+        foreach ($attr_list as $key => $attr_name) {
+            $E[$attr_name] = 0;
+            $D[$attr_name] = 0;
+            $W[$attr_name] = 0;
+        }
 
-		$count_product = DB::table('product_details')->count();
+        $count_product = DB::table('product_details')->count();
 
 		//calculate output entropy matrix E: Ej = -k/sum[pij*ln pij]
-		foreach ($P as $key => $pi) {
-			// dd($key.$pij);
-			foreach ($pi as $attr_name => $pij) {
-				if ($pij != 0 && $pij !=null) {
-					$E[$attr_name] += (-1/log($count_product))*$pij*log($pij); 
-				}				
-			}
-		}
+        foreach ($P as $key => $pi) {
+
+            foreach ($pi as $attr_name => $pij) {
+                if ($pij != 0 && $pij !=null) {
+                    $E[$attr_name] += (-1/log($count_product))*$pij*log($pij); 
+                }				
+            }
+        }
 
 		//variation coefficient of jth jactor: dj = 1-ej (hệ số biến thiên)
-		$sum_variation = 0;
-		foreach ($E as $attr_name => $value) {
-			$D[$attr_name] = 1 - $value;
-			$sum_variation +=$D[$attr_name];
-		}
+        $sum_variation = 0;
+        foreach ($E as $attr_name => $value) {
+            $D[$attr_name] = 1 - $value;
+            $sum_variation +=$D[$attr_name];
+        }
 
-		foreach ($D as $attr_name => $value) {
-			$W[$attr_name] = $value/$sum_variation;
-		}
+        foreach ($D as $attr_name => $value) {
+            $W[$attr_name] = $value/$sum_variation;
+        }
 
-		$weight = WeightOfEntropy::first();
-		
+        $weight = WeightOfEntropy::first();
+
 		//update to db
-		if ($weight) {
-			WeightOfEntropy::where('id',$weight['id'])->update($W);
-		} else {
-			WeightOfEntropy::create($W);
-		}
-	}
+        if ($weight) {
+            WeightOfEntropy::where('id',$weight['id'])->update($W);
+        } else {
+            WeightOfEntropy::create($W);
+        }
+    }
 
 
     /**
@@ -164,39 +164,39 @@ class TopsisController extends Controller
 
     public function decisionSupport(Request $request)
     {
-        
+
         $input = $request->all();
 
-    	$data = [
-    		'screen_size' => $request->screenSize,
-    		'camera_font' =>  $request->camera,
-    		'cpu_speed' =>  $request->cpu,
-    		'ram' =>  $request->ram,
-    		'cost' =>  $request->cost,
-    		'weight' =>  $request->weight,
-    		'length' =>  $request->demension,
-    		'width' =>  $request->demension,
-    		'thickness' =>  $request->demension,
-    		'internal_memory' =>  $request->internal,
-    		'external_memory_card' =>  $request->external,
-    		'battery' =>  $request->battery,
-    		'camera_rear' =>  $request->camera,
-    		'bluetooth' => $request->bluetooth,
-    	];
-        $sum_input = 0;
-        foreach ($data as $attr_name => $value) {
-            $sum_input+=$value;
-        }
-        foreach ($data as $attr_name => $value) {
-            $data[$attr_name] = $value/$sum_input;
-        }
+        $data = [
+          'screen_size' => $request->screenSize,
+          'camera_font' =>  $request->camera,
+          'cpu_speed' =>  $request->cpu,
+          'ram' =>  $request->ram,
+          'cost' =>  $request->cost,
+          'weight' =>  $request->weight,
+          'length' =>  $request->demension,
+          'width' =>  $request->demension,
+          'thickness' =>  $request->demension,
+          'internal_memory' =>  $request->internal,
+          'external_memory_card' =>  $request->external,
+          'battery' =>  $request->battery,
+          'camera_rear' =>  $request->camera,
+          'bluetooth' => $request->bluetooth,
+      ];
+      $sum_input = 0;
+      foreach ($data as $attr_name => $value) {
+        $sum_input+=$value;
+    }
+    foreach ($data as $attr_name => $value) {
+        $data[$attr_name] = $value/$sum_input;
+    }
 
-    	$weightEntropy = WeightOfEntropy::select('screen_size', 'camera_font', 'camera_rear', 'cpu_speed', 'ram', 'internal_memory', 'external_memory_card', 'bluetooth', 'length', 'width', 'thickness', 'weight', 'battery','cost')->first();
+    $weightEntropy = WeightOfEntropy::select('screen_size', 'camera_font', 'camera_rear', 'cpu_speed', 'ram', 'internal_memory', 'external_memory_card', 'bluetooth', 'length', 'width', 'thickness', 'weight', 'battery','cost')->first();
 
     	//Calculate the adjusted weight bj=wj*aj/ sum(wj*aj)
     	//wj: from weight_of_entropy table, aj: inputed from user
     	//B: array weight of factor
-    	
+
 
     	/**
     	 * STEP 2.1: Calculate the adjusted weight βj
