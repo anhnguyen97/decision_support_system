@@ -67,7 +67,6 @@
 					</div>
 					<ul class="sidebar_categories">
 						<li><a href="#">Apple</a></li>
-						<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
 						<li><a href="#">Samsung </a></li>
 						<li><a href="#">Oppo</a></li>
 						<li><a href="#">Huawei </a></li>
