@@ -14,7 +14,7 @@ class ProductDetail extends Model
     protected $fillable = [
         'product_id', 'screen_size', 'camera_font', 'camera_rear', 'cpu_speed', 'ram',
         'internal_memory', 'external_memory_card', 'bluetooth', 'length', 'width', 'thickness',
-        'weight', 'battery',
+        'weight', 'battery', 'cost',
     ];
 
     protected $table = 'product_details';

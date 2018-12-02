@@ -131,6 +131,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
+        //delete product's thumbnail
         if ($product->thumbnail != null && $product->thumbnail != 'undefined') {
             $file = explode('/',$product->thumbnail)[2];
             Storage::delete($file);

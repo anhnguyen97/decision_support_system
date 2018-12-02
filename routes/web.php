@@ -11,15 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-	return view('welcome');
-});
 
 Route::get('home', function() {
 	return view('admins.index');
 });
 
-Route::get('/updateDb', 'ProductController@updateDb');
+// Route::get('/updateDb', 'ProductController@updateDb');
 
 Route::group(['prefix' => 'admin'], function() {
 	Route::get('/', function() {
@@ -69,3 +66,12 @@ Route::group(['prefix' => 'admin'], function() {
 	});
 });
 
+
+Route::get('','ShopController@index');
+Route::get('{product_slug}', 'ShopController@getProductDetail');
+Route::get('function/suggestion', 'ShopController@showSuggestPage');
+
+Route::get('function/entropy', 'TopsisController@entropy');
+Route::get('function/normalizateProduct', 'TopsisController@normalizateProduct');
+
+Route::post('decisionSupport', 'TopsisController@decisionSupport');

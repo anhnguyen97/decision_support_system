@@ -32,4 +32,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Brand');
     }
+
+    public function normalized_product()
+    {
+        return $this->hasOne('App\NormalizedProduct');
+    }
 }
