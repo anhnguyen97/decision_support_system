@@ -69,9 +69,13 @@ Route::group(['prefix' => 'admin'], function() {
 
 Route::get('','ShopController@index');
 Route::get('{product_slug}', 'ShopController@getProductDetail');
-Route::get('function/suggestion', 'ShopController@showSuggestPage');
 
-Route::get('function/entropy', 'TopsisController@entropy');
-Route::get('function/normalizateProduct', 'TopsisController@normalizateProduct');
-
+Route::group(['prefix' => 'function'], function() {
+	//ADMIN
+	Route::get('topsis', 'TopsisController@index');	
+	Route::get('entropy', 'TopsisController@entropy')->name('entropy');
+	Route::get('normalizateProduct', 'TopsisController@normalizateProduct')->name('normalizateProduct');
+	//CUSTOMER
+	Route::get('suggestion', 'ShopController@showSuggestPage');
+});
 Route::post('decisionSupport', 'TopsisController@decisionSupport');

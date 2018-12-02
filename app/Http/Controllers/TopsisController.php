@@ -12,6 +12,10 @@ use App\WeightOfEntropy;
 class TopsisController extends Controller
 {
 
+    public function index()
+    {
+        return view('admins.topsis.index');
+    }
 	/**
 	 * calculate the criteria weight/ ENTROPY METHOD
 	 * A[m][n] : có m phương án lựa chọn trên tập n thuộc tính
@@ -107,6 +111,7 @@ class TopsisController extends Controller
         } else {
             WeightOfEntropy::create($W);
         }
+        return redirect()->back();
     }
 
 
@@ -160,6 +165,8 @@ class TopsisController extends Controller
     	foreach ($P as $item) {
     		NormalizedProduct::updateOrCreate($item);
     	}
+
+        return redirect()->back();
     }
 
     public function decisionSupport(Request $request)

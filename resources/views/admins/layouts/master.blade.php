@@ -91,7 +91,7 @@
           </li>
           <li><a href="{{ asset('admin/brands') }}"><i class="fa fa-table"></i><span>Danh sách Thương hiệu</span></a></li>
           <li><a href="{{ asset('/admin/products') }}"><i class="fa fa-circle-o"></i><span>Danh sách Sản phẩm</span></a></li>
-          <li><a href=""><i class="fa fa-book"></i> <span>Trợ giúp quyết định</span></a></li>
+          <li><a href="{{ asset('function/topsis') }}"><i class="fa fa-book"></i> <span>Trợ giúp quyết định</span></a></li>
           <li class="header">LABELS</li>
           <li><a href="{{ asset('') }}"><i class="fa fa-circle-o text-aqua"></i> <span>Support Page</span></a></li>
         </ul>
@@ -121,7 +121,7 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 2.4.0
       </div>
-      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.
+      <strong>Copyright &copy; 2018 <a href="https://github.com/anhnguyen97/decision_support_system"></a>.IT4341 - Hệ trợ giúp quyết định</strong> All rights reserved.
     </footer>
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
